@@ -7,15 +7,20 @@ const Home = () => {
     const [isPending,setIsPending] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:8000/blogs").then(res => {
+        setTimeout(() => {
+            fetch("http://localhost:8000/blogs").then(res => {
             return res.json();
         }).then((data)=> {
             console.log(data);
             setBlogs(data);
-        })
+            setIsPending(false);
+        })    
+        }, 1000);
+        
     },[]);
     return ( 
         <div className="home">
+            { isPending && <div> Loading...</div>}
             {blogs && <BlogList blogs={blogs} title="All Blogs" />}
             {/* <button onClick={() => setName('Hanyyyy')}>Change Name (for use effect hook)</button>
             <p>{ name }</p> */}
